@@ -142,7 +142,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "Or",
                                   style: Theme.of(context).textTheme.headline6,
                                   textAlign: TextAlign.center,
-                                )),
                             SizedBox(
                               height: 15,
                             ),
@@ -154,6 +153,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _handleSignIn();
                                 },
                                 loading: loading),
+                            SizedBox(
+                              height: 20,
+                            ),
                             (Platform.isIOS)?buildButton(
                                 context: context,
                                 text: "Sign in with Apple",
