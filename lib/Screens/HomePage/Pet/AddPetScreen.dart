@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,10 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
-import 'package:monkoodog/CustomWidgets.dart';
 import 'package:monkoodog/DataProvider/DataProvider.dart';
 import 'package:monkoodog/Modals/NewPet.dart';
-import 'package:monkoodog/Modals/breed.dart';
 import 'package:monkoodog/Widgets/ToogleButton.dart';
 import 'package:monkoodog/utils/age.dart';
 import 'package:monkoodog/utils/utiles.dart';

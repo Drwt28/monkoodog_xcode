@@ -1,11 +1,9 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
-import 'package:monkoodog/Modals/news.dart';
 import 'package:monkoodog/Screens/HomePage/Newspage/NewsDetail.dart';
 import 'package:monkoodog/utils/UiHelper.dart';
 import 'package:html/parser.dart';
-import 'package:monkoodog/utils/utiles.dart';
+
 
 class NewsItem extends StatelessWidget {
   final int index;

@@ -1,13 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:monkoodog/DataProvider/DataProvider.dart';
-import 'package:monkoodog/Screens/ConfirmOtpScreen.dart';
-import 'package:monkoodog/Screens/HomePage/HomePage.dart';
-import 'package:monkoodog/Screens/HomePage/Pet/AddPetScreen.dart';
-import 'package:monkoodog/Screens/Login.dart';
 import 'package:monkoodog/Screens/Slider.dart';
-import 'package:monkoodog/Screens/SplashScreen.dart';
-import 'package:monkoodog/Widgets/ToogleButton.dart';
 import 'package:monkoodog/utils/utiles.dart';
 import 'package:provider/provider.dart';
 

@@ -1,20 +1,15 @@
-import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:monkoodog/DataProvider/DataProvider.dart';
 import 'package:monkoodog/Modals/user.dart';
 import 'package:monkoodog/Screens/HomePage/BlogsPage/BlogsScreen.dart';
 import 'package:monkoodog/Screens/HomePage/Newspage/NewsPage.dart';
-import 'package:monkoodog/Screens/HomePage/Pet/AddPetScreen.dart';
 import 'package:monkoodog/Screens/HomePage/Pet/MyPetScreen.dart';
-import 'package:monkoodog/Screens/Login.dart';
 import 'package:monkoodog/Screens/Map/Finder.dart';
-import 'package:monkoodog/Screens/Map/PetFinder.dart';
 import 'package:monkoodog/Screens/Slider.dart';
 import 'package:monkoodog/Screens/User/ProfileUpdateScreen.dart';
 import 'package:monkoodog/utils/utiles.dart';

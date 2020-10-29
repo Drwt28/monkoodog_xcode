@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:monkoodog/Api/Api.dart';
-import 'package:monkoodog/Modals/news.dart';
 import 'package:monkoodog/Screens/HomePage/Newspage/NewsDetail.dart';
 import 'package:monkoodog/utils/utiles.dart';
 

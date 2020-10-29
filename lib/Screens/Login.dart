@@ -16,7 +16,6 @@ import 'package:monkoodog/Screens/HomePage/HomePage.dart';
 
 import 'package:monkoodog/utils/utiles.dart';
 import 'package:monkoodog/Screens/ConfirmOtpScreen.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -37,14 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var formKey = GlobalKey<FormState>();
 
-
-
-
-
   @override
-  void initState() {
-
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -53,65 +46,84 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30,),
+          padding: const EdgeInsets.only(
+            left: 30,
+            right: 30,
+          ),
           child: (loading)
               ? Center(
                   child: CircularProgressIndicator(),
                 )
               : SingleChildScrollView(
-                child: AnimationLimiter(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: AnimationConfiguration.toStaggeredList(
-                              duration: const Duration(milliseconds: 575),
-                              childAnimationBuilder: (widget)=>SlideAnimation(
+                  child: AnimationLimiter(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: AnimationConfiguration.toStaggeredList(
+                          duration: const Duration(milliseconds: 575),
+                          childAnimationBuilder: (widget) => SlideAnimation(
                                 horizontalOffset: -100,
-                            child: FadeInAnimation(child: widget),
-                          ), children: [
+                                child: FadeInAnimation(child: widget),
+                              ),
+                          children: [
                             SizedBox(
                               height: 55,
                             ),
                             Text(
                               "Let's Get Started",
-                              style: Theme.of(context).textTheme.headline5.copyWith(
-                                  color: Colors.black, fontWeight: FontWeight.w700),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  .copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Text(
                               "Enter Your mobile number",
-                              style: Theme.of(context).textTheme.headline6.copyWith(
-                                  color: Colors.black54, fontWeight: FontWeight.normal),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.normal),
                             ),
                             SizedBox(
                               height: 30,
                             ),
                             Text(
                               "Code",
-                              style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                  color: Colors.black26, fontWeight: FontWeight.normal),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1
+                                  .copyWith(
+                                      color: Colors.black26,
+                                      fontWeight: FontWeight.normal),
                             ),
                             Row(
                               children: [
                                 CountryCodePicker(
                                   textStyle: TextStyle(fontSize: 18),
                                   initialSelection: "IN",
-                                  favorite: ["+91","IN"],
-                                  onChanged: (val){
-                                    countryCode  = val.code;
+                                  favorite: ["+91", "IN"],
+                                  onChanged: (val) {
+                                    countryCode = val.code;
                                   },
                                 ),
                                 Expanded(
                                   child: TextFormField(
-                                    style: TextStyle(fontSize: 18,color: Utiles.primaryButton),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Utiles.primaryButton),
                                     keyboardType: TextInputType.number,
-                                    decoration:
-                                    InputDecoration(hintText: "Enter Mobile Number"),
-                                    validator: (val) => (val.isEmpty || val.length != 10)
-                                        ? "Enter Valid Mobile No"
-                                        : null,
+                                    decoration: InputDecoration(
+                                        hintText: "Enter Mobile Number"),
+                                    validator: (val) =>
+                                        (val.isEmpty || val.length != 10)
+                                            ? "Enter Valid Mobile No"
+                                            : null,
                                     onChanged: (val) {
                                       mobileNo = val;
                                       phoneNo = val;
@@ -120,15 +132,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
-
-
-                            SizedBox(height: 120,),
+                            SizedBox(
+                              height: 120,
+                            ),
                             buildButton(
                                 context: context,
                                 text: "Verify Mobile Number",
                                 color: Utiles.primaryBgColor,
                                 onPressed: () async {
-                                  if (formKey.currentState.validate()) verifyPhone();
+                                  if (formKey.currentState.validate())
+                                    verifyPhone();
                                   setState(() {
                                     loading = true;
                                   });
@@ -138,10 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 15,
                             ),
                             Center(
-                                child: Text(
-                                  "Or",
-                                  style: Theme.of(context).textTheme.headline6,
-                                  textAlign: TextAlign.center,
+                                child: Text("Or",
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                    textAlign: TextAlign.center)),
                             SizedBox(
                               height: 15,
                             ),
@@ -156,24 +169,32 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            (Platform.isIOS)?buildButton(
-                                context: context,
-                                text: "Sign in with Apple",
-                                color: Utiles.primaryButton,
-                                onPressed: () async{
-                                 AuthService service = AuthService();
-                                 var user = await service.appleSignIn();
-                                 if(user!=null)
-                                 getGoogleUser(user);
-                                 else
-                                   showDialog(context: context,child: AlertDialog(
-                                     title: Text("Unable to sign in "),
-                                     actions: [FlatButton(onPressed: (){
-                                       Navigator.pop(context);
-                                     }, child: Text("ok"))],
-                                   ));
-                                },
-                                loading: loading):Container(),
+                            (Platform.isIOS)
+                                ? buildButton(
+                                    context: context,
+                                    text: "Sign in with Apple",
+                                    color: Utiles.primaryButton,
+                                    onPressed: () async {
+                                      AuthService service = AuthService();
+                                      var user = await service.appleSignIn();
+                                      if (user != null)
+                                        getGoogleUser(user);
+                                      else
+                                        showDialog(
+                                            context: context,
+                                            child: AlertDialog(
+                                              title: Text("Unable to sign in "),
+                                              actions: [
+                                                FlatButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text("ok"))
+                                              ],
+                                            ));
+                                    },
+                                    loading: loading)
+                                : Container(),
                             SizedBox(
                               height: 20,
                             ),
@@ -185,16 +206,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(color: Colors.black87)),
                                   TextSpan(
                                       text: "woof@monkoodog.com",
-                                      style: TextStyle(color: Utiles.primaryBgColor))
+                                      style: TextStyle(
+                                          color: Utiles.primaryBgColor))
                                 ]),
                               ),
                             )
-                          ]
-
-                          ),
-                        ),
+                          ]),
+                    ),
+                  ),
                 ),
-              ),
         ),
       ),
     );
@@ -255,8 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<User> getUser(AuthResult authResult) async {
     String uid = authResult.user.uid;
 
-    var doc =
-        await Firestore.instance.collection("users").document(uid).get();
+    var doc = await Firestore.instance.collection("users").document(uid).get();
     if (doc.exists) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -271,8 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<User> getGoogleUser(FirebaseUser user) async {
     String uid = user.uid;
 
-    var doc =
-        await Firestore.instance.collection("users").document(uid).get();
+    var doc = await Firestore.instance.collection("users").document(uid).get();
     if (doc.exists) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -295,12 +313,14 @@ class _LoginScreenState extends State<LoginScreen> {
       loading = true;
       setState(() {});
       User user = new User(
-          userEmail: fUser.email, userPhone: fUser.phoneNumber, uid: fUser.uid,displayName: fUser.displayName,userUrl: fUser.photoUrl);
+          userEmail: fUser.email,
+          userPhone: fUser.phoneNumber,
+          uid: fUser.uid,
+          displayName: fUser.displayName,
+          userUrl: fUser.photoUrl);
 
-      var doc = await Firestore.instance
-          .collection("users")
-          .document(user.uid)
-          .get();
+      var doc =
+          await Firestore.instance.collection("users").document(user.uid).get();
 
       await doc.reference.setData(user.toJson());
 

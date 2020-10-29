@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ class Utiles {
   static Color primaryBgColorEnd = Color.fromRGBO(170, 250, 238, 1);
   static String urlAddPet =
       "pet_name=my pet&pet_gender=male&breed_type=6&dob=2019-12-07&number=923335709402&email=arsalankhan.igz@gmail.com&pure_breed_type=pure&mix_breed_type=mix&diseases=&allergies=&lovesto=lovesto&countryCode=92&location=32.7056383,71.500859";
+
   static String calculateAge(DateTime birthDate) {
     DateTime currentDate = DateTime.now();
     int age = currentDate.year - birthDate.year;
@@ -42,9 +42,7 @@ class Utiles {
       return 'assets/images/shop.png';
     else
       return 'assets/images/hospital.png';
-
   }
-
 
   static String calculateWeeks(DateTime birthDate) {
     DateTime currentDate = DateTime.now();

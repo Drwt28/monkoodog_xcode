@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,10 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
-import 'package:monkoodog/CustomWidgets.dart';
 import 'package:monkoodog/DataProvider/DataProvider.dart';
 import 'package:monkoodog/Modals/NewPet.dart';
-import 'package:monkoodog/Modals/breed.dart';
+
 import 'package:monkoodog/Widgets/ToogleButton.dart';
 import 'package:monkoodog/utils/age.dart';
 import 'package:monkoodog/utils/utiles.dart';
@@ -144,7 +142,6 @@ class _EditPetPageState extends State<EditPetPage> {
       setState(() {});
     });
   }
-
 
   List breeds;
   DateTime age;
@@ -504,8 +501,7 @@ class _EditPetPageState extends State<EditPetPage> {
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.all(14),
-                      hintText:
-                          'Tell us what your dog loves',
+                      hintText: 'Tell us what your dog loves',
                     ),
                     onSaved: (String value) {
                       // This optional block of code can be used to run
@@ -561,64 +557,65 @@ class _EditPetPageState extends State<EditPetPage> {
     focusNode.unfocus();
 
     bottomSheetController = scaffold_key.currentState.showBottomSheet(
-            (context) => Container(
-          child: Column(
-            children: [
-              ListTile(
-                title: Text(
-                  "Choose Breed",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.close,color: Colors.red,),
-                  onPressed: (){
-                    if(isPrimary)
-                    {
-                      selectedPrimaryBreed =null;
-                    }else{
-                      selectedSecondaryBreed = null;
-                    }
-                    Navigator.pop(context);
-                  }
-                  ,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextFormField(
-                  autofocus: true,
-                  onFieldSubmitted: (val) {
-                    if (isPrimary)
-                      selectedPrimaryBreed = val;
-                    else
-                      selectedSecondaryBreed = val;
-                  },
-                  onChanged: (val) {
-                    print(breeds.toString());
-                    suggestionList = buildListModels(
-                        breeds
-                            .where((element) =>
-                            element.contains(val.toLowerCase()))
-                            .toList(),
-                        isPrimary);
-                    print(suggestionList.toString());
-                    bottomSheetController.setState(() {});
-
-                    if (isPrimary)
-                      selectedPrimaryBreed = val;
-                    else
-                      selectedSecondaryBreed = val;
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Type Brred here",
+        (context) => Container(
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      "Choose Breed",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        if (isPrimary) {
+                          selectedPrimaryBreed = null;
+                        } else {
+                          selectedSecondaryBreed = null;
+                        }
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: TextFormField(
+                      autofocus: true,
+                      onFieldSubmitted: (val) {
+                        if (isPrimary)
+                          selectedPrimaryBreed = val;
+                        else
+                          selectedSecondaryBreed = val;
+                      },
+                      onChanged: (val) {
+                        print(breeds.toString());
+                        suggestionList = buildListModels(
+                            breeds
+                                .where((element) =>
+                                    element.contains(val.toLowerCase()))
+                                .toList(),
+                            isPrimary);
+                        print(suggestionList.toString());
+                        bottomSheetController.setState(() {});
+
+                        if (isPrimary)
+                          selectedPrimaryBreed = val;
+                        else
+                          selectedSecondaryBreed = val;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Type Brred here",
+                      ),
+                    ),
+                  ),
+                  suggestionList
+                ],
               ),
-              suggestionList
-            ],
-          ),
-        ),
+            ),
         backgroundColor: Colors.white,
         clipBehavior: Clip.hardEdge);
   }
