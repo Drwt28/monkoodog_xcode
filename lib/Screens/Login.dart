@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,21 +42,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: Padding(
-          padding: const EdgeInsets.only(
-            left: 30,
-            right: 30,
-          ),
-          child: (loading)
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
-                  child: AnimationLimiter(
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 30,
+          right: 30,
+        ),
+        child: (loading)
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                child: AnimationLimiter(
+                  child: Form(
+                    key: formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,8 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Expanded(
                                   child: TextFormField(
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        color: Utiles.primaryButton),
+                                      fontSize: 19,
+                                    ),
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         hintText: "Enter Mobile Number"),
@@ -140,11 +141,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 text: "Verify Mobile Number",
                                 color: Utiles.primaryBgColor,
                                 onPressed: () async {
-                                  if (formKey.currentState.validate())
+                                  if (formKey.currentState.validate()) {
                                     verifyPhone();
-                                  setState(() {
-                                    loading = true;
-                                  });
+
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                  }
                                 },
                                 loading: loading),
                             SizedBox(
@@ -169,32 +172,29 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            (Platform.isIOS)
-                                ? buildButton(
-                                    context: context,
-                                    text: "Sign in with Apple",
-                                    color: Utiles.primaryButton,
-                                    onPressed: () async {
-                                      AuthService service = AuthService();
-                                      var user = await service.appleSignIn();
-                                      if (user != null)
-                                        getGoogleUser(user);
-                                      else
-                                        showDialog(
-                                            context: context,
-                                            child: AlertDialog(
-                                              title: Text("Unable to sign in "),
-                                              actions: [
-                                                FlatButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text("ok"))
-                                              ],
-                                            ));
-                                    },
-                                    loading: loading)
-                                : Container(),
+                            (Platform.isAndroid)?Container():AppleSignInButton(
+                              type: ButtonType.signIn,
+                              cornerRadius: 8,
+                              onPressed: () async {
+                                AuthService service = AuthService();
+                                var user = await service.appleSignIn();
+                                if (user != null)
+                                  getGoogleUser(user);
+                                else
+                                  showDialog(
+                                      context: context,
+                                      child: AlertDialog(
+                                        title: Text("Unable to sign in "),
+                                        actions: [
+                                          FlatButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("ok"))
+                                        ],
+                                      ));
+                              },
+                            ),
                             SizedBox(
                               height: 20,
                             ),
@@ -215,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-        ),
+              ),
       ),
     );
   }

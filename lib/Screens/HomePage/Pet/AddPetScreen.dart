@@ -52,7 +52,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
                 showErrorDialog("OOPS, Please select primary breed");
               } else if (!imageExists) {
                 showErrorDialog("OOPS, Please upload image of pet");
-              } else {
+              }else if(age==null){
+                showErrorDialog("OOPS, Please select date of birth of pet");
+              }
+              else {
                 step = 2;
                 setState(() {});
               }
@@ -138,7 +141,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
         showDialog(
             context: context,
             child: AlertDialog(
-              title: Text("Are you sure to exit"),
+              title: Text("Do you want to exit"),
               actions: [
                 FlatButton(
                     onPressed: () {

@@ -37,6 +37,14 @@ class _SliderPageState extends State<SliderPage> {
         ? HomePage()
         : Scaffold(
             body: LiquidSwipe(
+              slideIconWidget: FloatingActionButton(
+                backgroundColor: Colors.white,
+                mini: true,
+                child: Icon(Icons.arrow_back_rounded,
+                  size: 26,
+                  semanticLabel: "slide left",
+                  color: Colors.black,),
+              ),
               enableSlideIcon: true,
               waveType: WaveType.liquidReveal,
               enableLoop: false,

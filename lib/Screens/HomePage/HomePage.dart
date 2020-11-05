@@ -1,10 +1,10 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:monkoodog/DataProvider/DataProvider.dart';
 import 'package:monkoodog/Modals/user.dart';
 import 'package:monkoodog/Screens/HomePage/BlogsPage/BlogsScreen.dart';
 import 'package:monkoodog/Screens/HomePage/Newspage/NewsPage.dart';
@@ -98,72 +98,83 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildHomeDrawer() {
-    User user = Provider.of<DataProvider>(context).user;
-    return Container(
-      child: Drawer(
-          elevation: 0,
-          child: AnimationLimiter(
-            child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: AnimationConfiguration.toStaggeredList(
-                  duration: Duration(milliseconds: 400),
-                  childAnimationBuilder: (widget) => SlideAnimation(
-                      horizontalOffset: -200,
-                      child: FadeInAnimation(
-                        child: widget,
-                      )),
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfileUpdateScreen()));
-                      },
-                      child: DrawerHeader(
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CircleAvatar(
-                                radius: 40.0,
-                                child: CircleAvatar(
-                                  radius: 39.5,
-                                  backgroundImage: (user!=null)?user.userUrl!=null?NetworkImage(user.userUrl):AssetImage(
-                                    'assets/images/logo_trans.png',
-                                  ):AssetImage(
-                                    'assets/images/logo_trans.png',
-                                  ),
-                                  backgroundColor: Colors.white,
-                                ),
-                                backgroundColor: Colors.black,
-                              ),
-                              SizedBox(width: 8,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+    var temp = Provider.of<FirebaseUser>(context);
+    return StreamBuilder<DocumentSnapshot>(
+      stream: Firestore.instance.collection("users").document(temp.uid).snapshots(),
+      builder: (context, snapshot) {
+        User user = User();
+
+        if(snapshot.hasData)
+          {
+            user = User.fromJson(snapshot.data.data);
+          }
+
+        return (!snapshot.hasData)?Center(child: CircularProgressIndicator(),):Container(
+          child: Drawer(
+              elevation: 0,
+              child: AnimationLimiter(
+                child: ListView(
+                  // Important: Remove any padding from the ListView.
+                  padding: EdgeInsets.zero,
+                  children: AnimationConfiguration.toStaggeredList(
+                      duration: Duration(milliseconds: 400),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                          horizontalOffset: -200,
+                          child: FadeInAnimation(
+                            child: widget,
+                          )),
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfileUpdateScreen()));
+                          },
+                          child: DrawerHeader(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text((user!=null)?
-                                    user.displayName??"":"",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Utiles.primaryBgColor,
-                                        fontWeight: FontWeight.normal),
-                                  ),Text(
-                                    '   Update Your Profile',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.normal),
+                                  CircleAvatar(
+                                    radius: 40.0,
+                                    child: CircleAvatar(
+                                      radius: 39.5,
+                                      backgroundImage: (user!=null)?user.userUrl!=null?NetworkImage(user.userUrl):AssetImage(
+                                        'assets/images/logo_trans.png',
+                                      ):AssetImage(
+                                        'assets/images/logo_trans.png',
+                                      ),
+                                      backgroundColor: Colors.white,
+                                    ),
+                                    backgroundColor: Colors.black,
+                                  ),
+                                  SizedBox(width: 8,),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text((user!=null)?
+                                        user.displayName??"":"",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Utiles.primaryBgColor,
+                                            fontWeight: FontWeight.normal),
+                                      ),Text(
+                                        '   Update Your Profile',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
 //                  decoration: BoxDecoration(
 //                    gradient: LinearGradient(colors: [
 //                      Utiles.primaryBgColor,
@@ -171,131 +182,131 @@ class _HomePageState extends State<HomePage> {
 //                    ]),
 //                    color: Colors.blue,
 //                  ),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.home,
-                      ),
-                      title: Text(
-                        'Home',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      onTap: () {
-                        selectedIndex -= 0;
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.share,
-                      ),
-                      title: Text(
-                        'Invite friends',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Share.share(
-                            'Check out our app Moonkodog https://play.google.com/store/apps/details?id=com.moonkodog.app');
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        CupertinoIcons.paw_solid,
-                      ),
-                      title: Text(
-                        'PetFinder',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Finder()));
-                      },
-                    ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.home,
+                          ),
+                          title: Text(
+                            'Home',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          onTap: () {
+                            selectedIndex -= 0;
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.share,
+                          ),
+                          title: Text(
+                            'Invite friends',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                            Share.share(
+                                'Check out our app Moonkodog https://play.google.com/store/apps/details?id=com.moonkodog.app');
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            CupertinoIcons.paw_solid,
+                          ),
+                          title: Text(
+                            'PetFinder',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Finder()));
+                          },
+                        ),
 
-                    ListTile(
-                      leading: Icon(
-                        Icons.report,
-                      ),
-                      title: Text("Report Issue",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal)),
-                      onTap: () async {
-                        Navigator.pop(context);
-                        var uri =
-                            'mailto:woof@monkoodog.com?subject=Reporting%20Issue&body=';
-                        if (await canLaunch(uri)) {
-                          launch(uri);
-                        } else {
-                          print("Cant  Do   IT");
-                        }
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.logout,
-                      ),
-                      title: Text(
-                        'Logout',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        showDialog(
-                          context: (context),
-                          builder: (context) => AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                            backgroundColor: Colors.white,
-                            title: Text("Logout"),
-                            content: Text("Are you want to logout"),
-                            actions: <Widget>[
-                              FlatButton(
-                                onPressed: () async {
-                                  try {
-                                    await GoogleSignIn().signOut();
-                                  } catch (e) {
-                                    print(e.toString());
-                                  }
-                                  FirebaseAuth.instance.signOut();
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SliderPage()));
+                        ListTile(
+                          leading: Icon(
+                            Icons.report,
+                          ),
+                          title: Text("Report Issue",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal)),
+                          onTap: () async {
+                            Navigator.pop(context);
+                            var uri =
+                                'mailto:woof@monkoodog.com?subject=Reporting%20Issue&body=';
+                            if (await canLaunch(uri)) {
+                              launch(uri);
+                            } else {
+                              print("Cant  Do   IT");
+                            }
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.logout,
+                          ),
+                          title: Text(
+                            'Logout',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                            showDialog(
+                              context: (context),
+                              builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                backgroundColor: Colors.white,
+                                title: Text("Logout"),
+                                content: Text("Do you want to logout ?"),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    onPressed: () async {
+                                      try {
+                                        await GoogleSignIn().signOut();
+                                      } catch (e) {
+                                        print(e.toString());
+                                      }
+                                      FirebaseAuth.instance.signOut();
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => SliderPage()));
 
 //
-                                },
-                                child: Text("YES"),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
+                                    },
+                                    child: Text("YES"),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("NO"),
+                                  )
+                                ],
                               ),
-                              FlatButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("NO"),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+                            );
+                          },
+                        ),
 //            AboutListTile(
 //              icon: Icon(Icons.phone_android),
 //              child: Text("Licenses",
@@ -307,9 +318,11 @@ class _HomePageState extends State<HomePage> {
 //              applicationName: 'Monkoodog',
 //              applicationLegalese: 'Blah Blah.',
 //            ),
-                  ]),
-            ),
-          )),
+                      ]),
+                ),
+              )),
+        );
+      }
     );
   }
 

@@ -6,7 +6,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monkoodog/DataProvider/DataProvider.dart';
 import 'package:monkoodog/Modals/User.dart';
+import 'package:provider/provider.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {
   @override
@@ -18,7 +20,6 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Future.delayed(Duration(milliseconds: 100)).then((value) async {
@@ -30,6 +31,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   @override
   Widget build(context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Update Profile"),
       ),
@@ -64,7 +66,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                           radius: 60,
                           child: (loading > 0)
                               ? CircularProgressIndicator(
-                            backgroundColor: Colors.white,
+                                  backgroundColor: Colors.white,
                                   value: loading,
                                 )
                               : Image.network(user.userUrl),
@@ -78,6 +80,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                       height: 10,
                     ),
                     TextFormField(
+                      onChanged: (val) {
+                        user.displayName = val;
+                      },
                       initialValue: user.displayName ?? "",
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -87,10 +92,27 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     SizedBox(
                       height: 15,
                     ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.call,
+                        color: Colors.black,
+                      ),
+                      title: Text(user.userPhone ?? ''),
+                      trailing: Icon(Icons.edit),
+                      onTap: () {},
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     ElevatedButton(
-                        onPressed: () {
-                          snap.data.reference.updateData(user.toJson());
+                        onPressed: () async {
                           Navigator.pop(context);
+                          await snap.data.reference.updateData(user.toJson());
+                          Provider.of<DataProvider>(context, listen: false)
+                              .getUser();
                         },
                         child: Text("Save")),
                   ],

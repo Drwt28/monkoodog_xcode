@@ -6,6 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Utiles {
+  static String getHeadString(String head) {
+    var temp = head;
+    if (head.length > 1)
+      temp = head[0].toUpperCase().toString() + head.substring(1, head.length);
+
+    return temp;
+  }
+
   static Color primaryBgColor = Color.fromRGBO(3, 223, 223, 1);
   static Color primaryButton = Color.fromRGBO(232, 87, 131, 1);
   static Color primaryBgColorEnd = Color.fromRGBO(170, 250, 238, 1);

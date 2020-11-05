@@ -433,31 +433,31 @@ class _PetFinderScreenState extends State<PetFinderScreen> {
               )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Area wise',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(color: Utiles.primaryBgColor, fontSize: 16),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CupertinoButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => AreaSearch("Pets", true)));
-              },
-              color: Utiles.primaryBgColor,
-              child: Text(
-                "Area Search",
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Text(
+          //     'Area wise',
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .headline6
+          //         .copyWith(color: Utiles.primaryBgColor, fontSize: 16),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: CupertinoButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //           context,
+          //           CupertinoPageRoute(
+          //               builder: (context) => AreaSearch("Pets", true)));
+          //     },
+          //     color: Utiles.primaryBgColor,
+          //     child: Text(
+          //       "Area Search",
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CupertinoButton(
