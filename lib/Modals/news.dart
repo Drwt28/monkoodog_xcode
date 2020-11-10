@@ -1,6 +1,6 @@
 
 class News {
-  int id;
+  String id;
   String title;
   String content;
   String url;
@@ -9,7 +9,7 @@ class News {
   News({this.id, this.title, this.url});
 
   News.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     url = json['url'];
     title = json['title'];
     content = json['content'];

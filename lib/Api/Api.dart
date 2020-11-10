@@ -57,16 +57,16 @@ class Api {
  * API to get Post list
  */
 
-  Future<List<Post>> getPostList(
+  Future<List<News>> getPostList(
     int pageSize,
     int pageNo,
   ) async {
-    var posts = List<Post>();
+    var posts = List<News>();
 
     var query = await Firestore.instance.collection("posts").orderBy("updatedTime",descending: true).limit(10).getDocuments();
     // loop and convert each item to Post
     for (var news in query.documents) {
-      posts.add(Post.fromJson(news.data));
+      posts.add(News.fromJson(news.data));
     }
     // var response;
     // try {
@@ -174,8 +174,8 @@ class Api {
   /*
  * API to get Event list
  */
-  Future<List<Event>> getEventList(int pageSize, int pageNo) async {
-    var eventList = List<Event>();
+  Future<List<News>> getEventList(int pageSize, int pageNo) async {
+    var eventList = List<News>();
     var response;
 
     // try {
@@ -200,7 +200,7 @@ class Api {
     var query = await Firestore.instance.collection("events").orderBy("updatedTime",descending: true).limit(10).getDocuments();
     // loop and convert each item to Post
     for (var news in query.documents) {
-      eventList.add(Event.fromJson(news.data));
+      eventList.add(News.fromJson(news.data));
     }
     return eventList;
   }

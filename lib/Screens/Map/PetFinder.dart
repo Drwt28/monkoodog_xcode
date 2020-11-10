@@ -192,7 +192,7 @@ class _PetFinderScreenState extends State<PetFinderScreen> {
                                                 Expanded(
                                                   flex: 1,
                                                   child: Hero(
-                                                    tag: petList[index].dob,
+                                                    tag: index,
                                                     child: FadeInImage(
                                                       fit: BoxFit.cover,
                                                       image: NetworkImage(

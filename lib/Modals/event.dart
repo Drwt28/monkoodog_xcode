@@ -1,7 +1,7 @@
 
 
 class Event {
-  int id;
+  String id;
   String title;
   String content;
   String url;
@@ -10,7 +10,7 @@ class Event {
   Event({this.id, this.title, this.url});
 
   Event.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     mediaLink = "https://www.monkoodog.com/wp-json/wp/v2/media/";
     title = json['title'];
     url = json['url'];

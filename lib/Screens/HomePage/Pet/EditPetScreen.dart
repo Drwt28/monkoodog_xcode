@@ -557,88 +557,89 @@ class _EditPetPageState extends State<EditPetPage> {
     focusNode.unfocus();
 
     bottomSheetController = scaffold_key.currentState.showBottomSheet(
-        (context) => Container(
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      "Choose Breed",
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ),
-                      onPressed: () {
-                        if (isPrimary) {
-                          selectedPrimaryBreed = null;
-                        } else {
-                          selectedSecondaryBreed = null;
-                        }
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: TextFormField(
-                      autofocus: true,
-                      onFieldSubmitted: (val) {
-                        if (isPrimary)
-                          selectedPrimaryBreed = val;
-                        else
-                          selectedSecondaryBreed = val;
-                      },
-                      onChanged: (val) {
-                        print(breeds.toString());
-                        suggestionList = buildListModels(
-                            breeds
-                                .where((element) =>
-                                    element.contains(val.toLowerCase()))
-                                .toList(),
-                            isPrimary);
-                        print(suggestionList.toString());
-                        bottomSheetController.setState(() {});
-
-                        if (isPrimary)
-                          selectedPrimaryBreed = val;
-                        else
-                          selectedSecondaryBreed = val;
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Type Brred here",
-                      ),
-                    ),
-                  ),
-                  suggestionList
-                ],
+            (context) => Container(
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(
+                  "Choose Breed",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.close,color: Colors.red,),
+                  onPressed: (){
+                    if(isPrimary)
+                    {
+                      selectedPrimaryBreed =null;
+                    }else{
+                      selectedSecondaryBreed = null;
+                    }
+                    Navigator.pop(context);
+                  }
+                  ,
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: TextFormField(
+                  autofocus: true,
+                  onFieldSubmitted: (val) {
+                    if (isPrimary)
+                      selectedPrimaryBreed = val;
+                    else
+                      selectedSecondaryBreed = val;
+                  },
+                  onChanged: (val) {
+                    print(breeds.toString());
+                    suggestionList = buildListModels(
+                        breeds
+                            .where((element) =>
+                            element.contains(val.toLowerCase()))
+                            .toList(),
+                        isPrimary);
+                    print(suggestionList.toString());
+                    bottomSheetController.setState(() {});
+
+                    if (isPrimary)
+                      selectedPrimaryBreed = val;
+                    else
+                      selectedSecondaryBreed = val;
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: "Type Breed here",
+                  ),
+                ),
+              ),
+              suggestionList
+            ],
+          ),
+        ),
         backgroundColor: Colors.white,
         clipBehavior: Clip.hardEdge);
   }
 
   Widget buildListModels(List stringList, bool isPrimary) {
     return Container(
-      height: MediaQuery.of(context).size.height * .35,
+      height: MediaQuery.of(context).size.height * .8,
       child: ListView.builder(
-        itemExtent: 40,
         physics: BouncingScrollPhysics(),
         itemCount: stringList.length,
-        itemBuilder: (context, index) => ListTile(
-          onTap: () {
-            if (isPrimary)
-              selectedPrimaryBreed = stringList[index];
-            else
-              selectedSecondaryBreed = stringList[index];
+        itemBuilder: (context, index) => Card(
+          child: ListTile(
+            onTap: () {
+              if (isPrimary)
+                selectedPrimaryBreed = stringList[index];
+              else
+                selectedSecondaryBreed = stringList[index];
 
-            Navigator.pop(context);
-          },
-          title: Text(
-            stringList[index],
-            style: Theme.of(context).textTheme.subtitle2,
+              Navigator.pop(context);
+            },
+            title: Text(
+              stringList[index],
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
           ),
         ),
       ),

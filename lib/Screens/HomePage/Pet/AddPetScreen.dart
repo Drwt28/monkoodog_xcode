@@ -592,7 +592,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       },
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Type Brred here",
+                        hintText: "Type Breed here",
                       ),
                     ),
                   ),
