@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:apple_sign_in/apple_sign_in.dart' as apple;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -172,8 +172,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            (Platform.isAndroid)?Container():AppleSignInButton(
-                              type: ButtonType.signIn,
+                            (Platform.isAndroid)?Container():apple.AppleSignInButton(
+                              type: apple.ButtonType.signIn,
+                              style: apple.ButtonStyle.black,
                               cornerRadius: 8,
                               onPressed: () async {
                                 AuthService service = AuthService();
