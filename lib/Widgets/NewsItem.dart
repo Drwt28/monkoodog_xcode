@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:monkoodog/Screens/HomePage/Newspage/NewsDetail.dart';
 import 'package:monkoodog/utils/UiHelper.dart';
 import 'package:html/parser.dart';
+import 'package:share/share.dart';
 
 
 class NewsItem extends StatelessWidget {
@@ -87,13 +87,11 @@ class NewsItem extends StatelessWidget {
                       FlatButton.icon(
                         label: Text("Share"),
                         onPressed: () {
-                          FlutterShareMe().shareToSystem(
-                              msg: 'https://www.monkoodog.com/' +
-                                  news[index]
-                                      .title
-                                      .replaceAll(' ', '-')
-                                      .toString()
-                                      .toLowerCase());
+                          Share.share('https://www.monkoodog.com/' +
+                              news[index].title
+                                  .replaceAll(' ', '-')
+                                  .toString()
+                                  .toLowerCase());
                         },
                         icon: Icon(
                           Icons.share,

@@ -5,7 +5,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+4
+version: 1.0.0+8
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -43,7 +43,6 @@ dependencies:
   lazy_load_scrollview: ^1.1.0
   share:
   country_code_picker:
-  flutter_share_me: ^0.9.1
   fancy_shimmer_image: ^1.2.0
 
 
