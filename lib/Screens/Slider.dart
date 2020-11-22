@@ -31,24 +31,31 @@ class _SliderPageState extends State<SliderPage> {
     checcklogin();
   }
 
+  int selctedPage =0;
   @override
   Widget build(BuildContext context) {
     return (isLooged)
         ? HomePage()
         : Scaffold(
-            body: LiquidSwipe(
-              slideIconWidget: FloatingActionButton(
-                backgroundColor: Colors.white,
-                mini: true,
-                child: Icon(Icons.arrow_back_rounded,
-                  size: 26,
-                  semanticLabel: "slide left",
-                  color: Colors.black,),
-              ),
+      body: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: LiquidSwipe(
               enableSlideIcon: true,
               waveType: WaveType.liquidReveal,
               enableLoop: false,
               initialPage: 0,
+              onPageChangeCallback: (val) {
+
+                selctedPage = val;
+                setState(() {
+
+                });
+              },
               pages: [
                 buildSinglePage(
                     'Welcome to\nMonkoodog',
@@ -63,15 +70,47 @@ class _SliderPageState extends State<SliderPage> {
                     Utiles.primaryButton,
                     isLast: false),
                 buildSinglePage(
-                    'Pet Vaccines Dates',
+                    'Keep Health Track',
                     'Get your dog health \ninsights, next due date for\nvaccines and lot more.',
                     'assets/vet2.png',
                     Utiles.primaryBgColor,
                     isLast: true),
               ],
             ),
-          );
+          ),
+
+          (selctedPage==2)?Container():Positioned(
+              bottom: 24,
+              left: 0,
+              right: 0,
+              child: Row(
+
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:[
+              buildSingleDot(0==selctedPage),
+              buildSingleDot(1==selctedPage),
+              buildSingleDot(2==selctedPage),
+            ]
+
+          ))
+        ],
+      ),
+    );
   }
+
+  Widget buildSingleDot(selected) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      height: 12,
+      width: 12,
+      decoration: BoxDecoration(
+          color: (selected)?Colors.white:Colors.grey,
+          shape: BoxShape.circle
+      ),
+    );
+  }
+
 
   Widget buildSinglePage(title, subtitle, image, color, {isLast}) {
     return Stack(
@@ -89,7 +128,11 @@ class _SliderPageState extends State<SliderPage> {
                 padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.headline4.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline4
+                      .copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -100,7 +143,11 @@ class _SliderPageState extends State<SliderPage> {
                 padding: const EdgeInsets.only(left: 20),
                 child: Text(
                   subtitle,
-                  style: Theme.of(context).textTheme.headline5.copyWith(
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headline5
+                      .copyWith(
                       color: Colors.white, fontWeight: FontWeight.normal),
                 ),
               ),
@@ -120,19 +167,23 @@ class _SliderPageState extends State<SliderPage> {
             ],
           ),
         ),
-        (isLast)?Container():Positioned(
+        (isLast) ? Container() : Positioned(
             right: 0,
             top: 0,
             bottom: 0,
 
             child: FlatButton(
-          child: Text("Skip",style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),),
-          onPressed: (){
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
-          },
-        )),
-        (!isLast)?Container():Positioned(
+              child: Text("Skip", style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: Colors.white),),
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+            )),
+        (!isLast) ? Container() : Positioned(
           left: 0,
           bottom: 0,
           right: 0,
@@ -147,7 +198,8 @@ class _SliderPageState extends State<SliderPage> {
               child: Center(
                 child: Text(
                   "Get Started",
-                  style: Theme.of(context)
+                  style: Theme
+                      .of(context)
                       .textTheme
                       .headline6
                       .copyWith(color: Colors.white),

@@ -17,6 +17,7 @@ import 'package:monkoodog/Screens/HomePage/HomePage.dart';
 
 import 'package:monkoodog/utils/utiles.dart';
 import 'package:monkoodog/Screens/ConfirmOtpScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -200,16 +201,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 20,
                             ),
                             Center(
-                              child: RichText(
-                                text: TextSpan(children: [
-                                  TextSpan(
-                                      text: "Issue?contact",
-                                      style: TextStyle(color: Colors.black87)),
-                                  TextSpan(
-                                      text: "woof@monkoodog.com",
-                                      style: TextStyle(
-                                          color: Utiles.primaryBgColor))
-                                ]),
+                              child: InkWell(
+                                onTap: (){
+                                  launch(Uri(
+                                    scheme: 'mailto',
+                                    path: 'woof@monkoodog.com'
+                                  ).toString());
+                                },
+                                child: RichText(
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                        text: "For Feedback Contact",
+                                        style: TextStyle(color: Colors.black87)),
+                                    TextSpan(
+                                        text: "woof@monkoodog.com",
+                                        style: TextStyle(
+                                            color: Utiles.primaryBgColor))
+                                  ]),
+                                ),
                               ),
                             )
                           ]),

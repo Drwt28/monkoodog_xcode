@@ -88,9 +88,9 @@ class _HomePageState extends State<HomePage> {
         height: MediaQuery.of(context).size.height * .1,
         child: Row(
           children: [
-            SingleItem(0, icon: "assets/news1.png",icon2:"assets/news1.png" ),
-            SingleItem(1, icon: "assets/pet1.png",icon2: "assets/pet2.png"),
-            SingleItem(2, icon: "assets/blog1.png",icon2: "assets/blog2.png"),
+            SingleItem(0, icon: "assets/news2.png" ),
+            SingleItem(1, icon: "assets/pet1.png"),
+            SingleItem(2, icon: "assets/blog2.png"),
           ],
         ),
       ),
@@ -328,7 +328,7 @@ class _HomePageState extends State<HomePage> {
 
   int selectedIndex = 1;
 
-  Widget SingleItem(index, {icon,icon2}) {
+  Widget SingleItem(index, {icon}) {
     return !(selectedIndex == index)
         ? Flexible(
             flex: 1,
@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 color: Utiles.primaryBgColor,
                 child: Center(
-                  child: Image.asset(icon2,color: Colors.black,height: 40,width: 40,),
+                  child: Image.asset(icon,color: Colors.black,height: 40,width: 40,),
                 ),
               ),
             ))

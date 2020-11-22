@@ -96,7 +96,7 @@ class _PetServicePageState extends State<PetServicePage> {
                           pet,
                         )));
           },
-          title: pet.addressLine1,
+          title: pet.company,
           snippet: pet.zip,
         ),
       );
@@ -290,7 +290,7 @@ class _PetServicePageState extends State<PetServicePage> {
                                           petList[index.floor()].latitude,
                                           petList[index.floor()]
                                               .longitude),
-                                      zoom: 12)));
+                                      zoom: 16)));
                         },
                         onScrolled: (index) {},
                         height: 120),

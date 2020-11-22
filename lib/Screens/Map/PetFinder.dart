@@ -71,7 +71,7 @@ class _PetFinderScreenState extends State<PetFinderScreen> {
   }
 
   getMarkers() {
-    petList = Provider.of<DataProvider>(context).mapPets;
+    petList = Provider.of<DataProvider>(context,listen: false).mapPets;
     setState(() {
       _markers.clear();
       for (NewPet pet in petList) {
@@ -414,6 +414,8 @@ class _PetFinderScreenState extends State<PetFinderScreen> {
                     setState(() {
                       distance = val;
                     });
+
+                    getMarkers();
                   },
                   value: distance,
                   activeColor: Utiles.primaryBgColor,
