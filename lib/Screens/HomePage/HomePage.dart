@@ -214,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () {
                             Navigator.pop(context);
                             Share.share(
-                                'Check out our app Moonkodog https://play.google.com/store/apps/details?id=com.moonkodog.app');
+                                'Check out our app Moonkodog https://play.google.com/store/apps/details?id=com.monkoodog.monkoodog');
                           },
                         ),
                         ListTile(
