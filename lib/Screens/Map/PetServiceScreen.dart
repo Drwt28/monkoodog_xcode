@@ -225,11 +225,12 @@ class _PetServicePageState extends State<PetServicePage> {
                                                 style: Theme
                                                     .of(context)
                                                     .textTheme
-                                                    .headline6
+                                                    .subtitle1
                                                     .copyWith(
                                                     color:
                                                     Colors.white,
-                                                    fontSize: 16),
+                                                    ),
+                                                textAlign: TextAlign.center,
                                               ),
                                               Text(petList[index].city ?? '',
                                                 textAlign:
@@ -242,6 +243,7 @@ class _PetServicePageState extends State<PetServicePage> {
                                                     color:
                                                     Colors.white,
                                                     fontSize: 15),
+
                                               ),
                                               Text(
                                                   "${petList[index].category}",

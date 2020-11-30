@@ -26,6 +26,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
   var breedSelected = [true, false];
   Uint8List profileImage;
 
+  var noAllergies = false;
+  var noDiseases = false;
+
   var feedBackController = TextEditingController();
   var petNameController = TextEditingController();
 
@@ -168,227 +171,230 @@ class _AddPetScreenState extends State<AddPetScreen> {
           title: Text("Add Pet"),
         ),
         bottomNavigationBar: buildBottomButton(),
-        body: step == 2
-            ? buildAddPet2()
-            : Form(
-                key: formkey,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 160,
-                        padding: EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 5,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Fill dog's info",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        .copyWith(color: Colors.black),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  buildWithHeading(
-                                    "Name",
-                                    TextFormField(
-                                      validator: (val) =>
-                                          val.isEmpty ? "Enter Pet Name" : null,
-                                      controller: petNameController,
-                                      focusNode: focusNode,
-                                      decoration: InputDecoration(
-                                          hintText: "Enter Name"),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: step == 2
+              ? buildAddPet2()
+              : Form(
+            key: formkey,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Container(
+                    height: 160,
+                    padding: EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Fill dog's info",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .copyWith(color: Colors.black),
                               ),
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        getImage();
-                                      },
-                                      child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 0, vertical: 10),
-                                            child: (profileImage != null)
-                                                ? Image.memory(profileImage)
-                                                : Image.asset(
-                                                    "assets/images/dog.png",
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                          )),
-                                    ),
-                                  ),
-                                  Text(
-                                    "Upload photo",
-                                    style: TextStyle(color: Colors.black54),
-                                  )
-                                ],
+                              SizedBox(
+                                height: 10,
                               ),
-                            )
-                          ],
+                              buildWithHeading(
+                                "Name",
+                                TextFormField(
+                                  validator: (val) =>
+                                  val.isEmpty ? "Enter Pet Name" : null,
+                                  controller: petNameController,
+                                  focusNode: focusNode,
+                                  decoration: InputDecoration(
+                                      hintText: "Enter Name"),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                              flex: 5,
-                              child: buildWithHeading(
-                                  "Date of Birth",
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                              spreadRadius: 1,
-                                              color: Colors.black12,
-                                              blurRadius: 3)
-                                        ],
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: ListTile(
-                                      onTap: () async {
-                                        var currentdate = DateTime.now();
-                                        age = await showDatePicker(
-                                            context: context,
-                                            initialDate:
-                                                DateTime(currentdate.year - 3),
-                                            firstDate:
-                                                DateTime(currentdate.year - 3),
-                                            lastDate: currentdate);
-                                        setState(() {});
-                                      },
-                                      title: Text(age == null
-                                          ? "Select Date"
-                                          : age.toString().substring(0, 10)),
-                                      trailing: Icon(
-                                        Icons.calendar_today_rounded,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ))),
-                          Expanded(
-                            flex: 3,
-                            child: SizedBox(),
-                          )
-                        ],
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buildWithHeading(
-                                "Gender",
-                                ToogleButtonColored(
-                                  onTap: (val) {
-                                    for (int i = 0;
-                                        i < genderSelected.length;
-                                        i++)
-                                      genderSelected[i] = !genderSelected[i];
-
-                                    setState(() {});
-                                    genderSelected[val] = true;
-                                  },
-                                  buttons: [" Male ", "Female"],
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buildWithHeading(
-                                "Breed",
-                                ToogleButtonColored(
-                                  onTap: (val) {
-                                    for (int i = 0;
-                                        i < breedSelected.length;
-                                        i++) breedSelected[i] = false;
-
-                                    breedSelected[val] = true;
-                                    setState(() {});
-                                  },
-                                  buttons: ["Pure", "Mix"],
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            buildWithHeading(
-                                "Choose Primary Breed",
-                                InkWell(
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: InkWell(
                                   onTap: () {
-                                    buildSearchBottomSheet(true);
+                                    getImage();
                                   },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 18, horizontal: 24),
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                              spreadRadius: 1,
-                                              color: Colors.black12,
-                                              blurRadius: 3)
-                                        ],
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Text(selectedPrimaryBreed ??
-                                        "Select Primary Breed"),
-                                  ),
-                                )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            (breedSelected[1])
-                                ? buildWithHeading(
-                                    "Choose Secondary Breed",
-                                    InkWell(
-                                      onTap: () {
-                                        buildSearchBottomSheet(false);
-                                      },
-                                      child: Container(
+                                  child: ClipRRect(
+                                      borderRadius:
+                                      BorderRadius.circular(8),
+                                      child: Padding(
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 18, horizontal: 24),
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  spreadRadius: 1,
-                                                  color: Colors.black12,
-                                                  blurRadius: 3)
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.white),
-                                        child: Text(selectedSecondaryBreed ??
-                                            "Select Secondary Breed"),
-                                      ),
-                                    ))
-                                : SizedBox()
-                          ],
-                        ),
+                                            horizontal: 0, vertical: 10),
+                                        child: (profileImage != null)
+                                            ? Image.memory(profileImage)
+                                            : Image.asset(
+                                          "assets/images/dog.png",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )),
+                                ),
+                              ),
+                              Text(
+                                "Upload photo",
+                                style: TextStyle(color: Colors.black54),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 5,
+                          child: buildWithHeading(
+                              "Date of Birth",
+                              Container(
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 1,
+                                          color: Colors.black12,
+                                          blurRadius: 3)
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white),
+                                child: ListTile(
+                                  onTap: () async {
+                                    var currentdate = DateTime.now();
+                                    age = await showDatePicker(
+                                        context: context,
+                                        initialDate:
+                                        DateTime(currentdate.year - 3),
+                                        firstDate:
+                                        DateTime(currentdate.year - 3),
+                                        lastDate: currentdate);
+                                    setState(() {});
+                                  },
+                                  title: Text(age == null
+                                      ? "Select Date"
+                                      : age.toString().substring(0, 10)),
+                                  trailing: Icon(
+                                    Icons.calendar_today_rounded,
+                                    size: 30,
+                                  ),
+                                ),
+                              ))),
+                      Expanded(
+                        flex: 3,
+                        child: SizedBox(),
                       )
                     ],
                   ),
-                ),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildWithHeading(
+                            "Gender",
+                            ToogleButtonColored(
+                              onTap: (val) {
+                                for (int i = 0;
+                                i < genderSelected.length;
+                                i++)
+                                  genderSelected[i] = !genderSelected[i];
+
+                                setState(() {});
+                                genderSelected[val] = true;
+                              },
+                              buttons: [" Male ", "Female"],
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildWithHeading(
+                            "Breed",
+                            ToogleButtonColored(
+                              onTap: (val) {
+                                for (int i = 0;
+                                i < breedSelected.length;
+                                i++) breedSelected[i] = false;
+
+                                breedSelected[val] = true;
+                                setState(() {});
+                              },
+                              buttons: ["Pure", "Mix"],
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        buildWithHeading(
+                            "Choose Primary Breed",
+                            InkWell(
+                              onTap: () {
+                                buildSearchBottomSheet(true);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 18, horizontal: 24),
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 1,
+                                          color: Colors.black12,
+                                          blurRadius: 3)
+                                    ],
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white),
+                                child: Text(selectedPrimaryBreed ??
+                                    "Select Primary Breed"),
+                              ),
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        (breedSelected[1])
+                            ? buildWithHeading(
+                            "Choose Secondary Breed",
+                            InkWell(
+                              onTap: () {
+                                buildSearchBottomSheet(false);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 18, horizontal: 24),
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 1,
+                                          color: Colors.black12,
+                                          blurRadius: 3)
+                                    ],
+                                    borderRadius:
+                                    BorderRadius.circular(10),
+                                    color: Colors.white),
+                                child: Text(selectedSecondaryBreed ??
+                                    "Select Secondary Breed"),
+                              ),
+                            ))
+                            : SizedBox()
+                      ],
+                    ),
+                  )
+                ],
               ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -435,6 +441,15 @@ class _AddPetScreenState extends State<AddPetScreen> {
                   ),
                 ),
                 optional: true),
+
+            CheckboxListTile(
+                title: Text("No Allergies"),
+                value: noAllergies, onChanged: (val){
+              noAllergies = val;
+              setState(() {
+
+              });
+            }),
             SizedBox(
               height: 10,
             ),
@@ -460,6 +475,14 @@ class _AddPetScreenState extends State<AddPetScreen> {
                   ),
                 ),
                 optional: true),
+            CheckboxListTile(
+                title: Text("No Diseases "),
+                value: noAllergies, onChanged: (val){
+              noAllergies = val;
+              setState(() {
+
+              });
+            }),
             SizedBox(
               height: 10,
             ),

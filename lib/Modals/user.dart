@@ -81,7 +81,7 @@ class User {
     data['user_pass'] = this.userPass;
     data['user_nicename'] = this.userNiceName;
     data['user_email'] = this.userEmail;
-    data['user_url'] = this.userEmail;
+    data['user_url'] = this.userUrl;
     data['user_registered'] = this.userRegistered;
     data['user_activation_key'] = this.userActivationKey;
     data['user_status'] = this.userStatus;

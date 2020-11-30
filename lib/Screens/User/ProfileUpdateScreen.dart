@@ -59,7 +59,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     Center(
                       child: InkWell(
                         onTap: () {
-                          getImage();
+                          getImage(snap);
                         },
                         child: CircleAvatar(
                           backgroundColor: Colors.black12,
@@ -67,9 +67,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                           child: (loading > 0)
                               ? CircularProgressIndicator(
                                   backgroundColor: Colors.white,
-                                  value: loading,
                                 )
-                              : Image.network(user.userUrl),
+                              : Container(),
                           backgroundImage: (user.userUrl == null)
                               ? AssetImage("assets/images/logo.png")
                               : NetworkImage(user.userUrl),
@@ -125,7 +124,12 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   Uint8List profileImage;
   double loading = 0;
 
-  Future getImage() async {
+  Future getImage(snap) async {
+
+    loading =1;
+    setState(() {
+
+    });
     ImageSource source;
 
     await showDialog(
@@ -156,32 +160,28 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
     var image = await ImagePicker()
         .getImage(maxWidth: 200, maxHeight: 200, source: source);
-
-    if (!mounted) return;
-
     profileImage = await image.readAsBytes();
-
     var storage = FirebaseStorage.instance.ref();
     var uploadTask = storage
         .child(DateTime.now().millisecondsSinceEpoch.toString())
         .putData(profileImage);
 
-    uploadTask.events.listen((event) {
-      setState(() {
-        print(loading);
-        loading =
-            event.snapshot.bytesTransferred / event.snapshot.totalByteCount;
-      });
-    }, onDone: () async {
-      user.userUrl = (await (await uploadTask.onComplete).ref.getDownloadURL());
 
-      print(user.userUrl);
-      loading = 0;
-      setState(() {});
-    });
+    user.userUrl = (await (await uploadTask.onComplete).ref.getDownloadURL());
+
+    print(user.userUrl);
+    await snap.data.reference.updateData(user.toJson());
+    Provider.of<DataProvider>(context, listen: false)
+        .getUser();
+    saveProfile();
+    loading = 0;
+    setState(() {});
+
   }
 
   saveProfile() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+
   }
 }

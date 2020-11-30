@@ -169,7 +169,7 @@ class _MyPetScreenState extends State<MyPetScreen> {
                                         )
                                       : Icon(
                                           FontAwesomeIcons.mars,
-                                          color: Colors.orange,
+                                          color: Colors.blue,
                                         )))
                     ],
                   )),

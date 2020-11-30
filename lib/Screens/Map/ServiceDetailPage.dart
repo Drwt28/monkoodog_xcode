@@ -65,37 +65,62 @@ class _ServiceDetailPageState extends State<ServiceDetailPage> {
   }
 
   buildSingleText(title, value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "$title :",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(color: Colors.black),
-              textAlign: TextAlign.justify,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '$value',
-              style: Theme.of(context).textTheme.headline6.copyWith(
-                    fontSize: 15,
-                    color: Colors.blue,
-                  ),
-              textAlign: TextAlign.justify,
-              maxLines: 3,
-              softWrap: true,
-            ),
-          ),
-        ],
+
+
+    return ListTile(
+
+      title:Text(
+        "$title ",
+        style: Theme.of(context)
+            .textTheme
+            .headline6
+            .copyWith(color: Colors.black),
+        textAlign: TextAlign.justify,
+      ),
+      subtitle: Text(
+        '$value',
+        style: Theme.of(context).textTheme.headline6.copyWith(
+          fontSize: 15,
+          color: Colors.blue,
+        ),
+        textAlign: TextAlign.justify,
+        maxLines: 10,
+        softWrap: true,
       ),
     );
+
+
+    // return Padding(
+    //   padding: const EdgeInsets.symmetric(horizontal: 8),
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //     children: [
+    //       Padding(
+    //         padding: const EdgeInsets.all(8.0),
+    //         child: Text(
+    //           "$title :",
+    //           style: Theme.of(context)
+    //               .textTheme
+    //               .headline6
+    //               .copyWith(color: Colors.black),
+    //           textAlign: TextAlign.justify,
+    //         ),
+    //       ),
+    //       Padding(
+    //         padding: const EdgeInsets.all(8.0),
+    //         child: Text(
+    //           '$value',
+    //           style: Theme.of(context).textTheme.headline6.copyWith(
+    //                 fontSize: 15,
+    //                 color: Colors.blue,
+    //               ),
+    //           textAlign: TextAlign.justify,
+    //           maxLines: 3,
+    //           softWrap: true,
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
