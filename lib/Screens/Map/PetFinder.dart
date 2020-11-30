@@ -107,11 +107,14 @@ class _PetFinderScreenState extends State<PetFinderScreen> {
   Widget build(BuildContext context) {
     petList = Provider.of<DataProvider>(context).mapPets;
     var location = Provider.of<DataProvider>(context).userLocation;
+
     getMarkers();
     return SafeArea(
       child: Scaffold(
         key: scaffold,
-        body: Stack(
+        body:(location==null)?Center(
+          child: CircularProgressIndicator(),
+        ): Stack(
           children: [
             ClipRRect(
               borderRadius: BorderRadius.only(
