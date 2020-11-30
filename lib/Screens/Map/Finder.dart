@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:monkoodog/DataProvider/DataProvider.dart';
 import 'package:monkoodog/Screens/Map/PetServiceScreen.dart';
 import 'package:monkoodog/utils/utiles.dart';
+import 'package:provider/provider.dart';
 
 import 'PetFinder.dart';
 
@@ -12,8 +14,15 @@ class Finder extends StatefulWidget {
 class _FinderState extends State<Finder> {
  int currentIndex =0;
 
+
+
+
   @override
   Widget build(BuildContext context) {
+   var loc =  Provider.of<DataProvider>(context).userLocation;
+    if(loc==null)
+      Provider.of<DataProvider>(context, listen: false).getUserLocation();
+
     return SafeArea(
       child: Container(
         color: Colors.white,
@@ -43,6 +52,12 @@ class _FinderState extends State<Finder> {
         ),
       ),
     );
+  }
+
+ @override
+  void initState() {
+
+//
   }
 
   SingleButton(selected,title,int val)

@@ -45,6 +45,7 @@ class _PetFinderScreenState extends State<PetFinderScreen> {
   @override
   void initState() {
     Provider.of<DataProvider>(context, listen: false).getMapPets(100);
+    Provider.of<DataProvider>(context, listen: false).getUserLocation();
   }
 
   bool isAreaSearch = false;

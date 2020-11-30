@@ -16,7 +16,7 @@ class DataProvider with ChangeNotifier {
   List<Vaccination> vaccinations = [];
   List<MultipleSelectItem> diseases;
   List<MultipleSelectItem> allergies;
-  LocationData userLocation;
+  LocationData userLocation ;
   List news, events, posts;
   double radius = 10;
   Geoflutterfire geoflutterfire = Geoflutterfire();
